@@ -1,23 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%=specificPost.title%></title>
-</head>
-<body>
-    <h1>this is page for specific route</h1>
-    <p><%=specificPost.title%></p>
-    <p><%=specificPost.description%></p>
-    <p>&#8377;<%=specificPost.price.toLocaleString("en-IN")%></p>
-    <p><%=specificPost.location%></p>
-    <p><%=specificPost.country%></p>
+<% layout("/layouts/boilerplate") %>
 
-    <form method="get" action="/listings/<%=specificPost._id%>/edit">
-        <button>Edit this listing</button>
-    </form>
-    <form method="post" action="/listings/<%=specificPost._id%>?_method=DELETE">
-        <button>Delete this listing</button>
-    </form>
-</body>
-</html>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            
+            <div class="card mb-4 shadow-lg">
+                <!-- Image Section -->
+                <img src="<%= specificPost.url %>" class="card-img-top show-img" alt="Listing Image">
+                
+                <div class="card-body">
+                    <!-- Title Section -->
+                    <h3 class="card-title text-center text-dark mb-3 font-weight-bold"><%= specificPost.title %></h3>
+                    
+                    <!-- Description Section -->
+                    <p class="card-text text-muted mb-3" style="font-size: 1.2rem;"><%= specificPost.description %></p>
+
+                    <!-- Price Section (smaller font size) -->
+                    <p class="card-text" style="font-size: 0.9rem;">
+                        &#8377;<%= specificPost.price.toLocaleString("en-IN") %>/night
+                    </p>
+
+                    <!-- Location Section (smaller font size) -->
+                    <p class="card-text" style="font-size: 0.9rem;"><%= specificPost.location %></p>
+
+                    <!-- Country Section (smaller font size) -->
+                    <p class="card-text" style="font-size: 0.9rem;"><%= specificPost.country %></p>
+                </div>
+            </div>
+
+            <!-- Edit and Delete Buttons -->
+            <div class="d-flex justify-content-between">
+                <!-- Edit Button -->
+                <form method="get" action="/listings/<%= specificPost._id %>/edit">
+                    <button type="submit" class="btn add-btn btn-lg w-48">Edit Listing</button>
+                </form>
+
+                <!-- Delete Button -->
+                <form method="post" action="/listings/<%= specificPost._id %>?_method=DELETE">
+                    <button type="submit" class="btn btn-dark btn-lg w-48">Delete Listing</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

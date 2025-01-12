@@ -13,6 +13,8 @@ app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(methodOverride("_method"))
+app.use(express.static(path.join(__dirname,"public")));
+
 
 main()
     .then(() => {
@@ -23,7 +25,7 @@ async function main() {
 }
 
 app.get("/",(req,res)=>{
-    res.send("this is the base route for a website");
+    res.redirect("/listings");
 })
 
 // TRAIN OUR DATABSE FROM SINGLE DATA.

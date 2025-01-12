@@ -1,23 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airbnb | Holidays | rentels, cabins, beach house & more</title>
-</head>
-<body>
+<% layout("/layouts/boilerplate") %>
+
+  <body>
     <!-- CREATE A NEW LISTING  -->
-    <h1>create new listing</h1>
-    <form method="get" action="/listings/new">
+    <!-- <h1>create new listing</h1> -->
+    <!-- <form method="get" action="/listings/new">
         <button>Create New Listing</button>
-    </form>
+    </form> -->
 
     <!-- SHOW CASE ALL THE LISTING PREPERTY FROM DATABASE  -->
-    <h1>All listings</h1>
-    <ul>
-       <% for(let listing of listings){ %>
-        <li><a href="/listings/<%=listing._id%>"><%=listing.title%></a></li>
-       <%}%>
-    </ul>
-</body>
-</html>
+
+    <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-3">
+      <% for(listing of listings){ %>
+        <a href="/listings/<%=listing._id%>" class="list-property">
+          <div class="card col">
+            <img src="<%=listing.url%>" class="card-img-top" alt="Listings_Image">
+            <div class="card-img-overlay"></div>
+            <div class="card-body">
+              <h1 class="card-text">
+                <%=listing.title%>
+              </h1>
+              <p class="card-text" style="font-size: 0.9rem;">
+                &#8377;<%= listing.price.toLocaleString("en-IN") %>/night
+              </p>
+              <p class="card-text" style="font-size: 0.9rem;">
+                <%= listing.location %>
+              </p>
+
+              <!-- Country Section (smaller font size) -->
+              <p class="card-text" style="font-size: 0.9rem;">
+                <%= listing.country %>
+              </p>
+
+            </div>
+          </div>
+          <%}%>
+    </div>
+    </a>
+  </body>
