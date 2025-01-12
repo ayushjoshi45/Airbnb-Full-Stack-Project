@@ -12,5 +12,12 @@
     <p>&#8377;<%=specificPost.price.toLocaleString("en-IN")%></p>
     <p><%=specificPost.location%></p>
     <p><%=specificPost.country%></p>
+
+    <form method="get" action="/listings/<%=specificPost._id%>/edit">
+        <button>Edit this listing</button>
+    </form>
+    <form method="post" action="/listings/<%=specificPost._id%>?_method=DELETE">
+        <button>Delete this listing</button>
+    </form>
 </body>
 </html>

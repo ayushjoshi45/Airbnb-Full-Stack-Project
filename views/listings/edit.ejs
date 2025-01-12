@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=editPost.title%></title>
+</head>
+<body>
+    <form method="post" action="/listings/<%=editPost._id%>?_method=PUT">
+        <input type="text" name="listings[title]" id="" value="<%= editPost.title%>"> <br><br>
+        <textarea name="listings[description]" id="" ><%=editPost.description%></textarea> <br><br>
+        <input type="url" name="listings[url]" id="" value="<%= editPost.url%>"> <br><br>
+        <input type="number" name="listings[price]" id="" value="<%= editPost.price%>"> <br><br>
+        <input type="text" name="listings[location]" id="" value="<%= editPost.location%>"> <br><br>
+        <input type="text" name="listings[country]" id="" value="<%= editPost.country%>"> <br><br>
+        <button>Make Change</button>
+    </form>
+</body>
+</html>

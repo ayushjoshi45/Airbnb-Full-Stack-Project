@@ -6,11 +6,14 @@
     <title>Airbnb | Holidays | rentels, cabins, beach house & more</title>
 </head>
 <body>
+    <!-- CREATE A NEW LISTING  -->
     <h1>create new listing</h1>
     <form method="get" action="/listings/new">
         <button>Create New Listing</button>
     </form>
-    <h1>all listings</h1>
+
+    <!-- SHOW CASE ALL THE LISTING PREPERTY FROM DATABASE  -->
+    <h1>All listings</h1>
     <ul>
        <% for(let listing of listings){ %>
         <li><a href="/listings/<%=listing._id%>"><%=listing.title%></a></li>
