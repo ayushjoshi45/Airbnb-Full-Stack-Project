@@ -20,7 +20,7 @@
                 <%=listing.title%>
               </h1>
               <p class="card-text" style="font-size: 0.9rem;">
-                &#8377;<%= listing.price.toLocaleString("en-IN") %>/night
+                &#8377;<%= Number(listing.price).toLocaleString("en-IN") %>/night
               </p>
               <p class="card-text" style="font-size: 0.9rem;">
                 <%= listing.location %>
