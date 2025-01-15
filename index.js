@@ -2,12 +2,14 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
+const Review = require("./models/review.js");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const path = require("path");
 const wrapAsync=require("./utils/wrapAsync.js");
 const ExpressError=require("./utils/ExpressError.js");
 const listingSchema=require("./schema.js");
+const reviewSchema=require("./schema.js");
 
 const MONGO_URI = "mongodb://127.0.0.1:27017/airbnb";
 app.set("view engine", "ejs");
@@ -36,6 +38,15 @@ const validateListing=(req,res,next)=>{
     next();
   }
 }
+const validateReview=(req,res,next)=>{
+  let{error}=reviewSchema.validate(req.body);
+  if(error){
+    throw new ExpressError(404,error)
+  }
+  else{
+    next();
+  }
+}
 
 // BASE ROUTE
 app.get("/", (req, res) => {
@@ -56,7 +67,7 @@ app.get("/listings/new", (req, res) => {
 // Show routes
 app.get("/listings/:id",wrapAsync(async (req, res) => {
   let { id } = req.params;
-  const specificPost = await Listing.findById(id);
+  const specificPost = await Listing.findById(id).populate("reviews");
   res.render("./listings/show.ejs", { specificPost });
 }));
 
@@ -87,12 +98,23 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
   await Listing.findByIdAndDelete(id);
   res.redirect("/listings");
 }));
+// Reviews 
 
+app.post("/listings/:id/reviews",validateReview,wrapAsync(async(req,res)=>{
+  let listing=await Listing.findById(req.params.id);
+  let newReview=new Review(req.body.review);
+  listing.reviews.push(newReview);
+
+  await newReview.save();
+  await listing.save();
+  console.log("review saved");
+  res.redirect(`/listings/${listing._id}`)
+}));
 app.all("*",(req,res,next)=>{
   next(new ExpressError(404,"Page Not Found"));
 })
 app.use((err, req, res, next) => {
-  let{statusCode,message}=err;
+  let{statusCode=500,message="this is error content"}=err;
   res.render("error.ejs",{err});
   // res.status(statusCode).send(message);
 });
