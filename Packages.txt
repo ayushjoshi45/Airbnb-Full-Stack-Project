@@ -1,0 +1,5 @@
+1-> method-override    this is the npm package which is middleware which is used to override the http method. form only use post and get request to overrite this use use method override to perform action like put patch delete etc...
+
+2-> ejs-mate           like navbar and footer is on every page in our project boiler plate inside layouts
+
+3->
