@@ -2,4 +2,6 @@
 
 2-> ejs-mate           like navbar and footer is on every page in our project boiler plate inside layouts
 
-3->
+3-> wrapAsync are used to handle async error more efficently more tha try catch block 
+
+4-> Joi it is a npm package used to validate out schema (server side validation)
