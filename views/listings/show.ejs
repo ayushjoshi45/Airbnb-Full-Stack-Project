@@ -100,6 +100,9 @@
                   <form method="post" action="/listings/<%= specificPost._id %>/reviews/<%= review._id %>?_method=DELETE">
                     <button type="submit" class="btn btn-sm btn-dark">Delete</button>
                   </form>
+                  <form method="post" action="/listings/<%= specificPost._id %>/reviews/<%= review._id %>?_method=PUT">
+                    <button type="submit" class="btn btn-sm btn-dark mt-2">Edit</button>
+                  </form>
                 </div>
               <% } %>
             </div>

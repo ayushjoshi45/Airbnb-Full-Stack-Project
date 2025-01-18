@@ -25,7 +25,7 @@ router.get("/", wrapAsync(async (req, res) => {
   }));
   
   // Create new listing route
-  router.get("//new", (req, res) => {
+  router.get("/new", (req, res) => {
     res.render("./listings/newListings.ejs");
   });
   
@@ -33,20 +33,33 @@ router.get("/", wrapAsync(async (req, res) => {
   router.get("/:id",wrapAsync(async (req, res) => {
     let { id } = req.params;
     const specificPost = await Listing.findById(id).populate("reviews");
-    res.render("./listings/show.ejs", { specificPost });
+    if(!specificPost){
+      req.flash("error","This listing does not exist");
+      res.redirect("/listings");
+    }
+    else{
+      res.render("./listings/show.ejs", { specificPost });
+    }
   }));
   
   // OPEN EDIT PAGE
   router.get("/:id/edit",wrapAsync(async (req, res) => {
     const { id } = req.params;
     const editPost = await Listing.findById(id);
-    res.render("./listings/edit.ejs", { editPost });
+    if(!editPost){
+      req.flash("error","This listing does not exist");
+      res.redirect("/listings");
+    }
+    else{
+      res.render("./listings/edit.ejs", { editPost });
+    }
   }));
   
   // route to add new object to database
   router.post("/", validateListing, wrapAsync(async (req, res) => {
       const newListings = new Listing(req.body.listings);
       await newListings.save();
+      req.flash("success","New Listing Created Successfully");
       res.redirect("/listings");
   }));
   
@@ -54,6 +67,7 @@ router.get("/", wrapAsync(async (req, res) => {
   router.put("/:id",validateListing, wrapAsync(async (req, res) => {
     const { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.listings });
+    req.flash("success","Listing Edited Successfully");
     res.redirect(`/listings/${id}`);
   }));
   
@@ -61,6 +75,7 @@ router.get("/", wrapAsync(async (req, res) => {
   router.delete("/:id", wrapAsync(async (req, res) => {
     const { id } = req.params;
     await Listing.findByIdAndDelete(id);
+    req.flash("success","Listing Deleted Successfully");
     res.redirect("/listings");
   }));
 
