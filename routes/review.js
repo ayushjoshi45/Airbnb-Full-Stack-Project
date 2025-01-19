@@ -43,7 +43,7 @@ router.post("/",validateReview,wrapAsync(async(req,res)=>{
   // Edit Review
   router.put("/:reviewId",(req,res)=>{
     const reviewId=req.params;
-    const currentEdit=Review.findById(reviewId);
+    const currentEdit=Review.findById(reviewId).populate("");
     // console.log(currentEdit);
     // res.render("./listings/editReview.ejs")
   })
