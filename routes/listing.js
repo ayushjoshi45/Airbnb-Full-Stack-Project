@@ -6,6 +6,9 @@ const ExpressError = require("../utils/ExpressError.js");
 const { listingSchema } = require("../schema.js");
 const { isUserLogin, isOwner } = require("../middleware/verify.js");
 
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
+
 // Requiring Controllers
 const listingController = require("../controllers/listing.js");
 
@@ -29,11 +32,14 @@ router.get("/:id/edit", isUserLogin, wrapAsync(listingController.openEdit));
 router
   .route("/")
   .get(wrapAsync(listingController.index))
-  .post(
-    isUserLogin,
-    validateListing,
-    wrapAsync(listingController.addNewListing)
-  );
+  // .post(
+  //   isUserLogin,
+  //   validateListing,
+  //   wrapAsync(listingController.addNewListing)
+  // );
+  .post( upload.single('listings[url]'),  (req, res, next) =>{
+    res.send(req.file);
+  })
 
 router
   .route("/:id")
