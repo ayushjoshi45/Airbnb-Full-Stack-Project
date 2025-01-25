@@ -9,11 +9,129 @@
 
     <!-- SHOW CASE ALL THE LISTING PREPERTY FROM DATABASE  -->
 
+    <style>
+      #gstClass{
+        display: none;
+      }
+      #filters{
+        display: flex;;
+        align-items: center;
+        justify-content:space-between;
+        flex-wrap: wrap;
+        gap:2rem;
+        margin-top: 1rem;
+      }
+      .filter{
+        text-align: center;
+      }
+      .filter i {
+        font-size: 1rem;
+        color:rgb(66, 66, 66);
+      }
+      .tax-toggel{
+        border:1px solid black; 
+        border-radius: 1rem; 
+        padding: 1rem;
+      }
+    </style>
+    <div id="filters">
+      <div class="filter">
+        <div>
+          <i class="fa-solid fa-fire"></i>
+        </div>
+        <p>
+          Trending
+        </p>
+      </div>
+
+      <!-- #2  -->
+
+      <div class="filter">
+        <div>
+          <i class="fa-regular fa-eye"></i>
+        </div>
+        <p>
+          View
+        </p>
+      </div>
+      <!-- #3  -->
+      <div class="filter">
+        <div>
+          <i class="fa-solid fa-mountain"></i>
+        </div>
+        <p>
+          Mountains
+        </p>
+      </div>
+      <div class="filter">
+        <div>
+          <i class="fa-solid fa-snowflake"></i>
+        </div>
+        <p>
+          Snow
+        </p>
+      </div>
+      <div class="filter">
+        <div>
+          <i class="fa-solid fa-wheat-awn"></i>
+        </div>
+        <p>
+          Farm
+        </p>
+      </div>
+      <div class="filter">
+        <div>
+          <i class="fa-solid fa-umbrella-beach"></i>
+        </div>
+        <p>
+          Beach
+        </p>
+      </div>
+      <div class="filter">
+        <div>
+          <i class="fa-solid fa-water"></i></div>
+        <p>
+          Lakes
+        </p>
+      </div>
+      <div class="filter">
+        <div>
+          <i class="fa-solid fa-tree"></i>
+      </div>
+        <p>
+          Tree House
+        </p>
+      </div>
+      <div class="filter">
+        <div>
+          <i class="fa-solid fa-igloo"></i>
+          </div>
+        <p>
+          Domes
+        </p>
+      </div>
+      <div class="filter">
+        <div>
+          <i class="fa-solid fa-ship"></i>
+          </div>
+        <p>
+          Boats
+        </p>
+      </div>
+      
+      <div class="tax-toggel">
+      <div class="form-check-reverse form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+        <label class="form-check-label" for="flexSwitchCheckChecked">Display Totel After Taxes</label>
+      </div>
+  </div>
+    </div>
+
     <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-3">
       <% for(listing of listings){ %>
         <a href="/listings/<%=listing._id%>" class="list-property">
           <div class="card col">
-            <img src="<%=listing.url%>" class="card-img-top" alt="Listings_Image">
+            <img src="<%=listing.url.link%>" class="card-img-top" alt="Listings_Image">
             <div class="card-img-overlay"></div>
             <div class="card-body">
               <h1 class="card-text">
@@ -21,7 +139,9 @@
               </h1>
               <p class="card-text" style="font-size: 0.9rem;">
                 &#8377;<%= Number(listing.price).toLocaleString("en-IN") %>/night
+                <i id="gstClass">&nbsp; &nbsp; +18% GST</i>
               </p>
+              
               <p class="card-text" style="font-size: 0.9rem;">
                 <%= listing.location %>
               </p>
@@ -37,3 +157,18 @@
     </div>
     </a>
   </body>
+
+  <script>
+    const taxSwitch=document.getElementById('flexSwitchCheckChecked');
+    const gst=document.querySelectorAll('#gstClass');
+    taxSwitch.addEventListener("click",()=>{
+      for(taxes of gst){
+      if(taxes.style.display!="inline"){
+        taxes.style.display="inline";
+      }
+      else{
+        taxes.style.display="none";
+      }
+    }
+    })
+  </script>

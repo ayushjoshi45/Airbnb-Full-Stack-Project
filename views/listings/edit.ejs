@@ -1,58 +1,109 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <div class="row">
-    <div class="col-8 offset-2">
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Edit Property Details</h1>
-    
-    <form method="post" action="/listings/<%= editPost._id %>?_method=PUT" novalidate class="needs-validation">
+  <div class="col-8 offset-2">
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Edit Property Details</h1>
+
+      <form
+        method="post"
+        action="/listings/<%= editPost._id %>?_method=PUT"
+        novalidate
+        class="needs-validation"
+        enctype="multipart/form-data"
+      >
         <!-- Title Field -->
         <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" name="listings[title]" id="title" class="form-control" value="<%= editPost.title %>" required>
-            <div class="invalid-feedback">Enter Title</div>
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            name="listings[title]"
+            id="title"
+            class="form-control"
+            value="<%= editPost.title %>"
+            required
+          />
+          <div class="invalid-feedback">Enter Title</div>
         </div>
 
         <!-- Description Field -->
         <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea name="listings[description]" id="description" class="form-control" rows="4" required><%= editPost.description %></textarea>
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            name="listings[description]"
+            id="description"
+            class="form-control"
+            rows="4"
+            required
+          >
+<%= editPost.description %></textarea
+          >
         </div>
-
+        
+        <div class="mb-3">
+          Original Image
+          <img src="<%=originalUrl%>" alt="">
+        </div>
         <!-- URL Field -->
         <div class="mb-3">
-            <label for="url" class="form-label">URL</label>
-            <input type="url" name="listings[url]" id="url" class="form-control" value="<%= editPost.url %>" placeholder="Enter URL of Images">
+          <label for="url" class="form-label">Uplode New Image</label>
+          <input
+            type="file"
+            name="listings[url]"
+            id="url"
+            class="form-control"
+            placeholder="Enter URL of Images"
+          />
         </div>
 
         <!-- Price Field -->
         <div class="mb-3">
-            <label for="price" class="form-label">Price</label>
-            <input type="number" name="listings[price]" id="price" class="form-control" value="<%= editPost.price %>" required>
-            <div class="invalid-feedback">Enter Price</div>
+          <label for="price" class="form-label">Price</label>
+          <input
+            type="number"
+            name="listings[price]"
+            id="price"
+            class="form-control"
+            value="<%= editPost.price %>"
+            required
+          />
+          <div class="invalid-feedback">Enter Price</div>
         </div>
 
         <div class="row">
-            <!-- Location Field -->
-        <div class="mb-3 col-4">
+          <!-- Location Field -->
+          <div class="mb-3 col-4">
             <label for="location" class="form-label">Location</label>
-            <input type="text" name="listings[location]" id="location" class="form-control" value="<%= editPost.location %>" required>
+            <input
+              type="text"
+              name="listings[location]"
+              id="location"
+              class="form-control"
+              value="<%= editPost.location %>"
+              required
+            />
             <div class="invalid-feedback">Enter Location</div>
-        </div>
+          </div>
 
-        <!-- Country Field -->
-        <div class="mb-3 col-8">
+          <!-- Country Field -->
+          <div class="mb-3 col-8">
             <label for="country" class="form-label">Country</label>
-            <input type="text" name="listings[country]" id="country" class="form-control" value="<%= editPost.country %>" required>
+            <input
+              type="text"
+              name="listings[country]"
+              id="country"
+              class="form-control"
+              value="<%= editPost.country %>"
+              required
+            />
             <div class="invalid-feedback">Enter Country</div>
-        </div>
+          </div>
         </div>
 
         <!-- Submit Button -->
-     
-            <button type="submit" class="btn btn-lg add-btn">Make Changes</button>
-            <br><br>
-        
-    </form>
-</div>
-</div>
+
+        <button type="submit" class="btn btn-lg add-btn">Make Changes</button>
+        <br /><br />
+      </form>
+    </div>
+  </div>
 </div>

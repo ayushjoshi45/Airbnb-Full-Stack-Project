@@ -33,13 +33,18 @@ module.exports.newForm=(req, res) => {
       res.redirect("/listings");
     }
     else{
-      res.render("./listings/edit.ejs", { editPost });
+    let originalUrl=editPost.url.link;
+    originalUrl=originalUrl.replace("/upload","/upload/w_250");
+      res.render("./listings/edit.ejs", { editPost,originalUrl });
     }
   }
 
   module.exports.addNewListing=async (req, res) => {
+    const link=req.file.path;
+    const filename=req.file.filename;
     const newListings = new Listing(req.body.listings);
     newListings.owner=req.user._id,
+    newListings.url={link,filename};
     await newListings.save();
     req.flash("success","New Listing Created Successfully");
     res.redirect("/listings");
@@ -47,9 +52,15 @@ module.exports.newForm=(req, res) => {
 
 module.exports.updateListing=async (req, res) => {
     const { id } = req.params;
-    await Listing.findByIdAndUpdate(id, { ...req.body.listings });
-    req.flash("success","Listing Edited Successfully");
-    res.redirect(`/listings/${id}`);
+    const listing=await Listing.findByIdAndUpdate(id, { ...req.body.listings });
+    if(typeof req.file!=="undefined"){
+      const link=req.file.path;
+      const filename=req.file.filename;
+      listing.url={link,filename};
+      await listing.save();
+    }
+      req.flash("success","Listing Edited Successfully");
+      res.redirect(`/listings/${id}`);
   }
 
   module.exports.deleteListing=async (req, res) => {

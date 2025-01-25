@@ -7,7 +7,8 @@ const { listingSchema } = require("../schema.js");
 const { isUserLogin, isOwner } = require("../middleware/verify.js");
 
 const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const {storage}=require("../cloudConfig.js")
+const upload = multer({storage})
 
 // Requiring Controllers
 const listingController = require("../controllers/listing.js");
@@ -32,14 +33,12 @@ router.get("/:id/edit", isUserLogin, wrapAsync(listingController.openEdit));
 router
   .route("/")
   .get(wrapAsync(listingController.index))
-  // .post(
-  //   isUserLogin,
-  //   validateListing,
-  //   wrapAsync(listingController.addNewListing)
-  // );
-  .post( upload.single('listings[url]'),  (req, res, next) =>{
-    res.send(req.file);
-  })
+  .post(
+    isUserLogin,
+    upload.single('listings[url]'),
+    validateListing,
+    wrapAsync(listingController.addNewListing)
+  );
 
 router
   .route("/:id")
@@ -47,6 +46,7 @@ router
   .put(
     isUserLogin,
     isOwner,
+    upload.single('listings[url]'),
     validateListing,
     wrapAsync(listingController.updateListing)
   )
